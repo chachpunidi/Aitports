@@ -20,8 +20,8 @@ public class TicketsController {
 
 
     @GetMapping
-    public List<TicketsDto> tickets() {
-        return ticketsService.findTickets();
+    public List<TicketsDto> tickets(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
+        return ticketsService.findTickets(page, size);
     }
 
     @GetMapping("/{ticketNo}")

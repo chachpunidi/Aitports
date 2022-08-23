@@ -1,17 +1,19 @@
 package ru.ch.airport.dto;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
+
+import javax.persistence.*;
+
 
 @Data
 @Entity
+@Table(name = "airports")
 public class AirportDto {
     @Id
-    @GeneratedValue
+    @Column(name = "airport_code")
     private String code;
+    @Column(name = "airport_name")
     private String name;
     private String city;
     private Float longitude;

@@ -5,7 +5,7 @@ import ru.ch.airport.dto.TicketsDto;
 import java.util.List;
 
 public interface TicketsService {
-    List<TicketsDto> findTickets();
+    List<TicketsDto> findTickets(Integer page, Integer size);
 
     TicketsDto findTicket(String ticketNo);
 

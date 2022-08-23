@@ -1,11 +1,8 @@
 package ru.ch.airport.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.*;
-import ru.ch.airport.dto.AircraftDto;
 import ru.ch.airport.dto.AirportDto;
-import ru.ch.airport.service.aircraft.AircraftService;
 import ru.ch.airport.service.airport.AirportService;
 
 import java.util.List;

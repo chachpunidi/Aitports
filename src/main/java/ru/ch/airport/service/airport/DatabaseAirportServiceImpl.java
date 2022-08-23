@@ -14,6 +14,11 @@ public class DatabaseAirportServiceImpl implements AirportService {
 
     private AirportCrudRepository airportCrudRepository;
 
+
+    @Autowired
+    public DatabaseAirportServiceImpl(AirportCrudRepository airportCrudRepository) {
+        this.airportCrudRepository = airportCrudRepository;
+    }
     @Override
     public List<AirportDto> findAirports() {
         List<AirportDto> target = new ArrayList<>();
