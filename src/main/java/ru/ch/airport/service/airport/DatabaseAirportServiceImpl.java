@@ -1,6 +1,8 @@
 package ru.ch.airport.service.airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import ru.ch.airport.SqlConsumer;
 import ru.ch.airport.dto.AirportDto;
 
@@ -40,11 +42,18 @@ public class DatabaseAirportServiceImpl implements AirportService {
     }
 
     @Override
+    @Transactional
     public Integer createAirports(List<AirportDto> airports) {
-        List<AirportDto> target = new ArrayList<>();
-        Iterable<AirportDto> returnAirports = airportCrudRepository.saveAll(airports);
-        returnAirports.forEach(target::add);
-        return target.size();
+        int rec = 0;
+        for (AirportDto airport: airports) {
+            AirportDto foudedAirport = findAirport(airport.getCode());
+            if (foudedAirport != null) {
+                throw new RuntimeException("Добавляемый аэропорт уже существует");
+            }
+            airportCrudRepository.save(airport);
+            rec = rec + 1;
+        };
+        return  rec;
     }
 
     @Override
@@ -54,6 +63,7 @@ public class DatabaseAirportServiceImpl implements AirportService {
     }
 
     @Override
+
     public Integer updateAirport(String code, AirportDto airport) {
         airport.setCode(code);
         airportCrudRepository.save(airport);
