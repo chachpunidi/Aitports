@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ru.ch.airport.service.airport.AirportMapper">
+    <resultMap id="AirportDtoResultMap" type="ru.ch.airport.dto.AirportDto">
+        <id column="airport_code" property="code" jdbcType="VARCHAR"/>
+        <result column="airport_name" property="name" jdbcType="VARCHAR"/>
+        <result column="city" property="city" jdbcType="VARCHAR"/>
+        <result column="longitude" property="longitude" jdbcType="NUMERIC"/>
+        <result column="latitude" property="latitude" jdbcType="NUMERIC"/>
+        <result column="timezone" property="timezone" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <select id="findAll" resultMap="AirportDtoResultMap">
+        select * from airports ar
+
+    </select>
+
+    <select id="findByCode" resultMap="AirportDtoResultMap">
+        select * from airports ar
+        where ar.airport_code = #{code}
+    </select>
+
+    <insert id="save" parameterType="ru.ch.airport.dto.AirportDto" >
+        INSERT INTO airports (airport_code, airport_name, city, longitude, latitude, timezone)
+        VALUES(#{code}, #{name}, #{city}, #{longitude}, #{latitude}, #{timezone})
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM airports
+        WHERE airport_code = #{code}
+    </delete>
+
+    <insert id="saveAll" parameterType="ru.ch.airport.dto.AirportDto" >
+
+        INSERT INTO airports (airport_code, airport_name, city, longitude, latitude, timezone)
+        VALUES(#{code}, #{name}, #{city}, #{longitude}, #{latitude}, #{timezone})
+
+    </insert>
+
+    <update id="update"  >
+        UPDATE airports
+         SET
+        <if test="airport.name!=null">airport_name=#{airport.name},</if>
+        <if test="airport.city!=null">city=#{airport.city},</if>
+        <if test="airport.longitude!=null">longitude=#{airport.longitude},</if>
+        <if test="airport.latitude!=null">latitude=#{airport.latitude},</if>
+        <if test="airport.timezone!=null">timezone=#{airport.timezone}</if>
+        WHERE airport_code = #{code}
+    </update>
+
+
+
+
+</mapper>

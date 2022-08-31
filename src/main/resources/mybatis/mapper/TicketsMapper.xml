@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ru.ch.airport.service.tickets.TicketsMapper">
+    <resultMap id="TicketsDtoResultMap" type="ru.ch.airport.dto.TicketsDto">
+        <id column="ticket_no" property="ticketNo" jdbcType="VARCHAR"/>
+        <result column="book_ref" property="bookRef" jdbcType="VARCHAR"/>
+        <result column="passenger_id" property="passengerId" jdbcType="VARCHAR"/>
+        <result column="passenger_name" property="passengerName" jdbcType="VARCHAR"/>
+        <result column="contact_data" property="contactData" jdbcType="VARCHAR"/>
+
+
+    </resultMap>
+
+    <select id="findAll" resultMap="TicketsDtoResultMap">
+        select * from tickets
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findByCode" resultMap="TicketsDtoResultMap">
+        select * from tickets tc
+        where tc.ticket_no = #{ticketNo}
+    </select>
+
+    <insert id="save" parameterType="ru.ch.airport.dto.TicketsDto" >
+        INSERT INTO tickets (ticket_no, book_ref, passenger_id, passenger_name, contact_data)
+        VALUES(#{ticketNo}, #{bookRef}, #{passengerId}, #{passengerName}, #{contactData}::JSONB)
+    </insert>
+
+    <insert id="saveAll" parameterType="ru.ch.airport.dto.TicketsDto" >
+        INSERT INTO tickets (ticket_no, book_ref, passenger_id, passenger_name, contact_data)
+        VALUES(#{ticketNo}, #{bookRef}, #{passengerId}, #{passengerName}, #{contactData}::JSONB)
+    </insert>
+
+    <update id="update"  >
+        UPDATE tickets
+        SET
+        <if test="ticket.bookRef!=null">book_ref=#{ticket.bookRef},</if>
+        <if test="ticket.passengerId!=null">passenger_id=#{ticket.passengerId},</if>
+        <if test="ticket.passengerName!=null">passenger_name=#{ticket.passengerName},</if>
+        <if test="ticket.contactData!=null">contact_data=#{ticket.contactData}::JSONB</if>
+
+        WHERE ticket_no = #{ticketNo}
+    </update>
+
+    <delete id="delete" >
+        DELETE FROM ticket_flights
+        WHERE ticket_no = #{ticketNo};
+        DELETE FROM tickets
+        WHERE ticket_no = #{ticketNo};
+    </delete>
+
+</mapper>

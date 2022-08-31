@@ -5,3 +5,7 @@ spring:
     username: postgres
     password: postgres
     driverClassName: org.postgresql.Driver
+
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml

@@ -1,74 +1,62 @@
 package ru.ch.airport.service.airport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import ru.ch.airport.SqlConsumer;
 import ru.ch.airport.dto.AirportDto;
 
-import javax.sql.DataSource;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class DatabaseAirportServiceImpl implements AirportService {
 
-    private AirportCrudRepository airportCrudRepository;
+    private AirportMapper airportMapper;
 
 
     @Autowired
-    public DatabaseAirportServiceImpl(AirportCrudRepository airportCrudRepository) {
-        this.airportCrudRepository = airportCrudRepository;
+    public DatabaseAirportServiceImpl(AirportMapper airportMapper) {
+        this.airportMapper = airportMapper;
     }
     @Override
     public List<AirportDto> findAirports() {
-        List<AirportDto> target = new ArrayList<>();
-        Iterable<AirportDto> airportIterable = airportCrudRepository.findAll();
-        airportIterable.forEach(target::add);
-        return target;
+
+        return airportMapper.findAll();
     }
+
     @Override
     public AirportDto findAirport(String code) {
-        AirportDto airport = airportCrudRepository.findById(code).orElse(null);
-        return airport;
+
+        return airportMapper.findByCode(code);
     }
 
     @Override
     public Integer createAirport(AirportDto airport) {
-        airportCrudRepository.save(airport);
-        return 1;
-
+        Integer x = airportMapper.save(airport);
+        return x;
     }
 
     @Override
-    @Transactional
     public Integer createAirports(List<AirportDto> airports) {
         int rec = 0;
-        for (AirportDto airport: airports) {
-            AirportDto foudedAirport = findAirport(airport.getCode());
-            if (foudedAirport != null) {
-                throw new RuntimeException("Добавляемый аэропорт уже существует");
+        for(AirportDto airport: airports) {
+            AirportDto foudeAirport = findAirport(airport.getCode());
+            if (foudeAirport != null) {
+                throw new RuntimeException();
             }
-            airportCrudRepository.save(airport);
-            rec = rec + 1;
-        };
+            Integer operationCount = airportMapper.save(airport);
+            rec = rec + operationCount;
+
+        }
         return  rec;
     }
 
     @Override
     public Integer deleteAirport(String code) {
-        airportCrudRepository.deleteById(code);
-        return 1;
+       Integer x = airportMapper.delete(code);
+        return x;
     }
 
     @Override
-
     public Integer updateAirport(String code, AirportDto airport) {
-        airport.setCode(code);
-        airportCrudRepository.save(airport);
-        return 1;
-
+       Integer x =  airportMapper.update(code, airport);
+        return x;
     }
 }
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ru.ch.airport.service.aircraft.AircraftMapper">
+    <resultMap id="AircraftDtoResultMap" type="ru.ch.airport.dto.AircraftDto">
+        <id column="aircraft_code" property="code" jdbcType="VARCHAR"/>
+        <result column="model" property="model" jdbcType="VARCHAR"/>
+        <result column="range" property="range" jdbcType="NUMERIC"/>
+        <result column="manufacturer" property="manufacturer" jdbcType="VARCHAR"/>
+
+    </resultMap>
+
+    <select id="findAll" resultMap="AircraftDtoResultMap">
+        select * from aircrafts ar
+    </select>
+
+    <select id="findByCode" resultMap="AircraftDtoResultMap">
+        select * from aircrafts ar
+        where ar.aircraft_code = #{code}
+    </select>
+
+    <insert id="save" parameterType="ru.ch.airport.dto.AircraftDto" >
+        INSERT INTO aircrafts (aircraft_code, model, range)
+        VALUES(#{code}, #{model}, #{range})
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM aircrafts
+        WHERE aircraft_code = #{code}
+    </delete>
+
+    <insert id="saveAll" parameterType="ru.ch.airport.dto.AircraftDto" >
+
+        INSERT INTO aircrafts (aircraft_code, model, range)
+        VALUES(#{code}, #{model}, #{range})
+
+    </insert>
+
+    <update id="update"  >
+        UPDATE aircrafts
+         SET
+        <if test="aircraft.manufacturer!=null">manufacturer=#{aircraft.manufacturer},</if>
+        <if test="aircraft.model!=null">model=#{aircraft.model},</if>
+        <if test="aircraft.range!=null">range=#{aircraft.range}</if>
+        WHERE aircraft_code = #{code}
+    </update>
+
+
+
+
+</mapper>

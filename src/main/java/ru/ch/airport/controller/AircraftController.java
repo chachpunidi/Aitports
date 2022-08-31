@@ -36,12 +36,13 @@ public class AircraftController {
 
     @PutMapping("batch")
     public Integer createAircrafts(@RequestBody List<AircraftDto> aircrafts) {
-      return   aircraftService.createAircrafts(aircrafts);
+        Integer x = aircraftService.createAircrafts(aircrafts);
+        return x;
     }
 
     @PatchMapping("/{code}")
     public Integer updateAircraft(@PathVariable(value = "code") String code, @RequestBody AircraftDto aircraft) {
-        return  aircraftService.updateAircraft(code, aircraft);
+        return aircraftService.updateAircraft(code, aircraft);
     }
 
     @DeleteMapping("/{code}")

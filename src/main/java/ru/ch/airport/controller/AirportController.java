@@ -20,6 +20,7 @@ public class AirportController {
 
     @GetMapping
     public List<AirportDto> airports() {
+
         return airportService.findAirports();
     }
 
