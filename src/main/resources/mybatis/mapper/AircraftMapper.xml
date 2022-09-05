@@ -29,10 +29,13 @@
     </delete>
 
     <insert id="saveAll" parameterType="ru.ch.airport.dto.AircraftDto" >
-
-        INSERT INTO aircrafts (aircraft_code, model, range)
-        VALUES(#{code}, #{model}, #{range})
-
+        <if test="aircrafts != null and !aircrafts.isEmpty()">
+            INSERT INTO aircrafts (aircraft_code, model, range)
+            VALUES
+            <foreach item="aircraft" collection="aircrafts" separator=", " nullable="true">
+                (#{aircraft.code}, #{aircraft.model}, #{aircraft.range})
+            </foreach>
+        </if>
     </insert>
 
     <update id="update"  >

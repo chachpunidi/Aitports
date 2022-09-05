@@ -27,8 +27,13 @@
     </insert>
 
     <insert id="saveAll" parameterType="ru.ch.airport.dto.TicketsDto" >
-        INSERT INTO tickets (ticket_no, book_ref, passenger_id, passenger_name, contact_data)
-        VALUES(#{ticketNo}, #{bookRef}, #{passengerId}, #{passengerName}, #{contactData}::JSONB)
+        <if test="tickets != null and !tickets.isEmpty()">
+            INSERT INTO tickets (ticket_no, book_ref, passenger_id, passenger_name, contact_data)
+            VALUES
+            <foreach item="ticket" collection="tickets" separator=", " nullable="true">
+                (#{ticket.ticketNo}, #{ticket.bookRef}, #{ticket.passengerId}, #{ticket.passengerName}, #{ticket.contactData}::JSONB)
+            </foreach>
+        </if>
     </insert>
 
     <update id="update"  >

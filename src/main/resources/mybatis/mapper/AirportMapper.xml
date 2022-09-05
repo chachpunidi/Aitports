@@ -32,10 +32,13 @@
     </delete>
 
     <insert id="saveAll" parameterType="ru.ch.airport.dto.AirportDto" >
-
-        INSERT INTO airports (airport_code, airport_name, city, longitude, latitude, timezone)
-        VALUES(#{code}, #{name}, #{city}, #{longitude}, #{latitude}, #{timezone})
-
+        <if test="airports != null and !airports.isEmpty()">
+            INSERT INTO airports (airport_code, airport_name, city, longitude, latitude, timezone)
+            VALUES
+            <foreach item="airport" collection="airports" separator=", " nullable="true">
+                (#{airport.code}, #{airport.name}, #{airport.city}, #{airport.longitude}, #{airport.latitude}, #{airport.timezone})
+            </foreach>
+        </if>
     </insert>
 
     <update id="update"  >

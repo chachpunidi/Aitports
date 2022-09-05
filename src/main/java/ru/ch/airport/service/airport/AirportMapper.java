@@ -15,7 +15,7 @@ public interface AirportMapper {
 
     Integer save(AirportDto airport);
 
-    Iterable<AirportDto> saveAll(List<AirportDto> airports);
+    Integer saveAll(List<AirportDto> airports);
 
 
     Integer delete(String code);

@@ -15,7 +15,7 @@ public interface AircraftMapper {
 
     Integer delete(String code);
 
-    Iterable<AircraftDto> saveAll(List<AircraftDto> aircrafts);
+    Integer saveAll(List<AircraftDto> aircrafts);
 
     Integer update(String code, AircraftDto aircraft);
 }

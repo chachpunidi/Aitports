@@ -34,17 +34,8 @@ public class DatabaseAirportServiceImpl implements AirportService {
 
     @Override
     public Integer createAirports(List<AirportDto> airports) {
-        int rec = 0;
-        for(AirportDto airport: airports) {
-            AirportDto foudeAirport = findAirport(airport.getCode());
-            if (foudeAirport != null) {
-                throw new RuntimeException();
-            }
-            Integer operationCount = airportMapper.save(airport);
-            rec = rec + operationCount;
-
-        }
-        return  rec;
+       Integer x = airportMapper.saveAll(airports);
+       return x;
     }
 
     @Override

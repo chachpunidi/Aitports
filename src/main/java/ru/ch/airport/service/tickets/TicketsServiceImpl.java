@@ -37,17 +37,8 @@ public class TicketsServiceImpl implements TicketsService {
     }
 
     public Integer createTickets(List<TicketsDto> tickets) {
-        int rec = 0;
-        for(TicketsDto ticket: tickets) {
-            TicketsDto foudeTicket = findTicket(ticket.getTicketNo());
-            if (foudeTicket != null) {
-                throw new RuntimeException();
-            }
-            Integer operationCount = ticketsMapper.save(ticket);
-            rec = rec + operationCount;
-
-        }
-        return  rec;
+        Integer operationCount = ticketsMapper.saveAll(tickets);
+        return  operationCount;
     }
 
     @Override

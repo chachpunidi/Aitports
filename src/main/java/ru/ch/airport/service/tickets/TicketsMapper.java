@@ -11,7 +11,7 @@ public interface TicketsMapper {
     TicketsDto findByCode(String ticketNo);
     Integer save(TicketsDto ticket);
 
-    Iterable<TicketsDto> saveAll(List<TicketsDto> tickets);
+    Integer saveAll(List<TicketsDto> tickets);
 
     Integer update(String ticketNo, TicketsDto ticket);
 

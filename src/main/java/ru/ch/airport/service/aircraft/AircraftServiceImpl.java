@@ -34,17 +34,8 @@ public class AircraftServiceImpl implements AircraftService {
 
     @Override
     public Integer createAircrafts(List<AircraftDto> aircrafts) {
-        int rec = 0;
-        for(AircraftDto aircraft: aircrafts) {
-            AircraftDto foudeAirport = findAircraft(aircraft.getCode());
-            if (foudeAirport != null) {
-                throw new RuntimeException();
-            }
-            Integer operationCount = aircraftMapper.save(aircraft);
-            rec = rec + operationCount;
-
-        }
-        return  rec;
+       Integer x = aircraftMapper.saveAll(aircrafts);
+       return x;
     }
 
     @Override
