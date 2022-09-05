@@ -41,7 +41,6 @@
     <update id="update"  >
         UPDATE aircrafts
          SET
-        <if test="aircraft.manufacturer!=null">manufacturer=#{aircraft.manufacturer},</if>
         <if test="aircraft.model!=null">model=#{aircraft.model},</if>
         <if test="aircraft.range!=null">range=#{aircraft.range}</if>
         WHERE aircraft_code = #{code}
