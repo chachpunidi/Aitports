@@ -2,13 +2,20 @@ package ru.ch.airport.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.ch.airport.dto.AircraftDto;
 import ru.ch.airport.service.aircraft.AircraftService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -27,9 +34,11 @@ public class AircraftController {
 
     @Operation(description = "Получить список самолетов", summary = "Получить список самолетов")
     @GetMapping
-    public List<AircraftDto> aircrafts() {
-        return aircraftService.findAircrafts();
+    public ResponseEntity<?> aircrafts() {
+        return ResponseEntity.ok(aircraftService.findAircrafts());
     }
+
+
 
     @Operation(description = "Получить самолет по коду", summary = "Получить самолет по коду")
     @GetMapping("/{code}")
@@ -45,7 +54,7 @@ public class AircraftController {
     @Operation(description = "Создание самолета", summary = "Создание самолета")
     @PutMapping
     public Integer createAircraft(@RequestBody AircraftDto aircraft) {
-      return   aircraftService.createAircraft(aircraft);
+        return aircraftService.createAircraft(aircraft);
     }
 
 

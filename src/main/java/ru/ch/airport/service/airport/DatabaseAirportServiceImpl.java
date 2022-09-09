@@ -40,6 +40,7 @@ public class DatabaseAirportServiceImpl implements AirportService {
 
     @Override
     public Integer deleteAirport(String code) {
+
        Integer x = airportMapper.delete(code);
         return x;
     }

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.ch.airport.dto.AirportDto;
+import ru.ch.airport.exception.CodeNotExistException;
 import ru.ch.airport.service.airport.AirportService;
 
 import java.util.List;
@@ -60,11 +61,12 @@ public class AirportController {
     public Integer deleteAirport(
             @Parameter(description = "Код аэропорта", example = "111")
             @PathVariable(value = "code")
-            String code) {
-        return airportService.deleteAirport(code);
+            String code)  {
+       return airportService.deleteAirport(code);
+
     }
 
-    @Operation(description = "Обновить аэропорта по коду", summary = "Обновить аэропорт по коду")
+    @Operation(description = "Обновить аэропорт по коду", summary = "Обновить аэропорт по коду")
     @PatchMapping("/{code}")
     public Integer updateAirport(
             @Parameter(description = "Код аэропорта", example = "116")

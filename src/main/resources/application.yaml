@@ -1,9 +1,9 @@
 spring:
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/demo?currentSchema=bookings
+    url: jdbc:postgresql://localhost:5434/demo?currentSchema=bookings
     username: postgres
-    password: postgres
+    password: mysecretpassword
     driverClassName: org.postgresql.Driver
 
 mybatis:
