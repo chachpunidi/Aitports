@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  airports_db:
+    image: postgres:13.4
+    ports:
+      - '5434:5432'
+    volumes:
+      - ./airport-db:/docker-entrypoint-initdb.d
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
